@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ece9e6, #ffffff);
+            height: 200vh; /* Increase height to enable scrolling */
+        }
+        #timer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 50px;
+        }
+        .count-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background 0.3s;
+        }
+        .count-box:hover {
+            transform: scale(1.05);
+            background: #e0e0e0;
+        }
+        .count-box h1 {
+            font-size: 2em;
+            color: #333;
+            margin: 0;
+        }
+        .count-box p {
+            margin: 0;
+            font-size: 0.8em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="timer">
+        <div class="count-box" id="count1"><p>Instagram Followers</p><h1>10000</h1></div>
+        <div class="count-box" id="count2"><p>Facebook Followers</p><h1>30000</h1></div>
+        <div class="count-box" id="count3"><p>Twitter Followers</p><h1>60000</h1></div>
+        <div class="count-box" id="count4"><p>Youtube Subscribers</p><h1>70000</h1></div>
+    </div>
+
+    <script>
+        const Timer = (count, idx, s) => {
+            let counter = 1;
+            let id = setInterval(() => {
+                document.querySelector(idx).querySelector('h1').innerText = counter;
+                counter++;
+                if (counter > count) {
+                    clearInterval(id);
+                }
+            }, s);
+        }
+
+        const startTimers = () => {
+            let count1 = parseInt(document.querySelector("#count1 h1").innerText);
+            let count2 = parseInt(document.querySelector("#count2 h1").innerText);
+            let count3 = parseInt(document.querySelector("#count3 h1").innerText);
+            let count4 = parseInt(document.querySelector("#count4 h1").innerText);
+
+            Timer(count1, "#count1",  1.01);
+            Timer(count2, "#count2",  1.02);
+            Timer(count3, "#count3",  1.03);
+            Timer(count4, "#count4",  1.04   );
+        }
+
+        let timersStarted = false;
+
+        window.addEventListener('scroll', () => {
+            const timerDiv = document.querySelector('#timer');
+            const rect = timerDiv.getBoundingClientRect();
+            if (rect.top <= window.innerHeight && !timersStarted) {
+                timersStarted = true;
+                startTimers();
+            }
+        });
+    </script>
+
+</body>
+</html>
